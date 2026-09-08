@@ -1,7 +1,5 @@
 # the-ark
 
-The Ark: Halo ring (agent harness) factory. Primary function is to destroy flood outbreaks (hand coding).
-
 Dotfiles for agent tooling. One repo that puts the same setup on every machine, for every harness:
 
 - **memory-layer MCP server** (`mcp/memory-layer/`) — persistent, token-efficient access to a markdown knowledge store, with hybrid search and issue tracking
