@@ -102,7 +102,7 @@ const URL_HOST = process.env.BRAINSTORM_URL_HOST || (HOST === '127.0.0.1' ? 'loc
 const SESSION_DIR = process.env.BRAINSTORM_DIR || '/tmp/brainstorm';
 const CONTENT_DIR = path.join(SESSION_DIR, 'content');
 const STATE_DIR = path.join(SESSION_DIR, 'state');
-const THE_ARK_LABEL = 'The Ark';
+const HALO_LABEL = 'Halo';
 let ownerPid = process.env.BRAINSTORM_OWNER_PID ? Number(process.env.BRAINSTORM_OWNER_PID) : null;
 
 // Per-session secret key. The companion is reachable by any local browser tab
@@ -199,7 +199,7 @@ const helperInjection = '<script>\n' + helperScript + '\n</script>';
 // ========== Helper Functions ==========
 
 function brandMarkup() {
-  return '<div class="brand"><span class="brand-copy">' + THE_ARK_LABEL + ' Brainstorming</span></div>';
+  return '<div class="brand"><span class="brand-copy">' + HALO_LABEL + ' Brainstorming</span></div>';
 }
 
 function renderBranding(html) {

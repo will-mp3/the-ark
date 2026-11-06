@@ -97,7 +97,7 @@ your path and complete them in order.
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/the-ark/specs/YYYY-MM-DD-<topic>-design.md`.
+6. **Write design doc** — save to `docs/halo/specs/YYYY-MM-DD-<topic>-design.md`.
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
 9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
@@ -203,7 +203,7 @@ is the whole process.
 
 **Documentation:**
 
-- Write the validated design to `docs/the-ark/specs/YYYY-MM-DD-<topic>-design.md`.
+- Write the validated design to `docs/halo/specs/YYYY-MM-DD-<topic>-design.md`.
 - Never commit or push unless the user explicitly asks in this conversation.
 
 **Spec Self-Review:**

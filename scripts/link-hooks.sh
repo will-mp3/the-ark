@@ -2,13 +2,13 @@
 set -euo pipefail
 
 # Wires the SessionStart hook into every harness, so a fresh session on any
-# machine starts with the using-the-ark skill already injected:
-#   - Codex:       ~/.codex/hooks.json     — a standalone file, so the ark owns
+# machine starts with the using-halo skill already injected:
+#   - Codex:       ~/.codex/hooks.json     — a standalone file, so Halo owns
 #                                            it outright via symlink
 #   - Claude Code: ~/.claude/settings.json — no standalone hooks file exists, so
 #                                            this is a one-time idempotent merge
 # Both harnesses accept the same hookSpecificOutput JSON and both run the same
-# script, reached through a ~/.<harness>/ark-session-start symlink. That keeps
+# script, reached through a ~/.<harness>/halo-session-start symlink. That keeps
 # the committed config machine-independent: later edits ship on `git pull`.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd -P)"
@@ -22,7 +22,7 @@ CODEX_HOOKS_SRC="$REPO/hooks/codex-hooks.json"
 # --- the shared shim, in each harness's directory ---
 for dir in "$HOME/.claude" "$HOME/.codex"; do
   run mkdir -p "$dir"
-  target="$dir/ark-session-start"
+  target="$dir/halo-session-start"
   if [ -e "$target" ] && [ ! -L "$target" ]; then
     warn "$target exists and is not a symlink — backing up to $target.bak"
     run mv "$target" "$target.bak"
@@ -69,7 +69,7 @@ fi
 # --- Claude Code: merge one SessionStart entry into settings.json ---
 CLAUDE_SETTINGS="$HOME/.claude/settings.json"
 if [ "${DRY_RUN:-0}" = "1" ]; then
-  printf '\033[2m[dry-run]\033[0m merge the ark SessionStart hook into %s\n' "$CLAUDE_SETTINGS"
+  printf '\033[2m[dry-run]\033[0m merge the Halo SessionStart hook into %s\n' "$CLAUDE_SETTINGS"
 else
   node "$REPO/scripts/merge-claude-settings.mjs" --hook "$CLAUDE_SETTINGS"
 fi

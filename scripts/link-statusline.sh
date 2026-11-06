@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Wires the ark's status line into both harnesses. They take opposite shapes, so
-# this is the one piece of the ark that cannot be a single shared file:
+# Wires Halo's status line into both harnesses. They take opposite shapes, so
+# this is the one piece of Halo that cannot be a single shared file:
 #
 #   Claude Code — runs an arbitrary command and renders its stdout. Gets
-#     statusline/statusline.sh through a ~/.claude/ark-statusline shim, so later
+#     statusline/statusline.sh through a ~/.claude/halo-statusline shim, so later
 #     edits to the script ship on `git pull` with no re-run of setup.
 #   Codex — no command hook. Its status line is a picker over a fixed vocabulary
 #     of items (`/statusline` in the TUI), stored as [tui].status_line in
@@ -27,7 +27,7 @@ fi
 
 run mkdir -p "$HOME/.claude"
 
-target="$HOME/.claude/ark-statusline"
+target="$HOME/.claude/halo-statusline"
 if [ -e "$target" ] && [ ! -L "$target" ]; then
   warn "$target exists and is not a symlink — backing up to $target.bak"
   run mv "$target" "$target.bak"
@@ -44,7 +44,7 @@ fi
 
 CLAUDE_SETTINGS="$HOME/.claude/settings.json"
 if [ "${DRY_RUN:-0}" = "1" ]; then
-  printf '\033[2m[dry-run]\033[0m merge the ark status line into %s\n' "$CLAUDE_SETTINGS"
+  printf '\033[2m[dry-run]\033[0m merge the Halo status line into %s\n' "$CLAUDE_SETTINGS"
 else
   node "$REPO/scripts/merge-claude-settings.mjs" --statusline "$CLAUDE_SETTINGS"
 fi

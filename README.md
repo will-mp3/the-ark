@@ -1,4 +1,4 @@
-# the-ark
+# halo
 
 Dotfiles for agent tooling. One repo that puts the same setup on every machine, for every harness:
 
@@ -13,7 +13,7 @@ Both harnesses run the *same files* from this checkout via symlinks. `git pull` 
 
 ```bash
 git clone <this repo>
-cd the-ark
+cd halo
 ./setup.sh
 ```
 
@@ -26,7 +26,7 @@ That's it. The script is idempotent, re-run it any time. It will:
 4. Symlink every skill into `~/.claude/skills` (Claude Code) and `~/.agents/skills` (Codex)
 5. Symlink `agents/AGENTS.global.md` to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md` (existing real files are backed up to `.bak`)
 6. Register the MCP server with both harness CLIs
-7. Wire the SessionStart hook so every session loads `using-the-ark`
+7. Wire the SessionStart hook so every session loads `using-halo`
 8. Wire the status line into both harnesses
 
 **One manual step on a new machine:** Codex only runs hooks it has been told to trust, and
@@ -58,14 +58,14 @@ agents/
 hooks/
   codex-hooks.json  # symlinked to ~/.codex/hooks.json
 statusline/
-  statusline.sh     # symlinked to ~/.claude/ark-statusline (Codex gets an item
+  statusline.sh     # symlinked to ~/.claude/halo-statusline (Codex gets an item
                     # list in config.toml instead, see Status line)
 ```
 
 ## Search uptime
 
 Semantic search needs Ollama on `localhost:11434`. A backgrounded `ollama serve` dies at
-logout, so `setup.sh` installs a launchd agent instead: `~/Library/LaunchAgents/com.the-ark.ollama.plist`,
+logout, so `setup.sh` installs a launchd agent instead: `~/Library/LaunchAgents/com.halo.ollama.plist`,
 with `RunAtLoad` and `KeepAlive`, so it starts at login and restarts within seconds if it
 crashes or is killed.
 
@@ -82,21 +82,21 @@ Without that, the mtime alone made such a note look current and it was skipped f
 Check on it:
 
 ```bash
-launchctl print gui/$(id -u)/com.the-ark.ollama | grep -E 'state|pid'
-tail -f ~/Library/Logs/the-ark-ollama.log
+launchctl print gui/$(id -u)/com.halo.ollama | grep -E 'state|pid'
+tail -f ~/Library/Logs/halo-ollama.log
 ```
 
 ## Status line
 
 Both harnesses show `branch · model · context · 5-hour limit · weekly limit`. This is the one
-piece of the ark that cannot be a single shared file, because the two take opposite shapes.
+piece of Halo that cannot be a single shared file, because the two take opposite shapes.
 
 **Claude Code** runs an arbitrary command and renders its stdout, so it gets
 `statusline/statusline.sh` : `branch | model | ctx: [bar] % | 5h: [bar] % | wk: [bar] %`, bars
 going green → yellow → red as they fill. Two usage windows rather than one: the 5-hour limit is
 what throttles a working session, the weekly one is what runs out mid-week.
 
-`setup.sh` symlinks it to `~/.claude/ark-statusline` and points `settings.json` at that shim, so edits ship on `git pull` without re-running setup. An existing
+`setup.sh` symlinks it to `~/.claude/halo-statusline` and points `settings.json` at that shim, so edits ship on `git pull` without re-running setup. An existing
 *custom* `statusLine` is left alone and reported rather than overwritten.
 
 Its one dependency is `jq`, which macOS has shipped at `/usr/bin/jq` since Ventura. Without it
@@ -111,7 +111,7 @@ cannot run the script; `setup.sh` writes the item set that renders the same fiel
 status_line = ["git-branch", "model", "context-used", "five-hour-limit", "weekly-limit"]
 ```
 
-A `status_line` you have already set is never overwritten (an item set a previous ark version
+A `status_line` you have already set is never overwritten (an item set a previous Halo version
 wrote is upgraded, since that one is ours). The vocabulary is much larger than the five above:
 `context-remaining`, `used-tokens`, `task-progress`,
 `thread-credits`, `estimated-thread-cost`, `approval-mode`, `fast-mode`, `pull-request-number`
@@ -146,7 +146,7 @@ Both are skipped if you have set your own value.
 ## Daily use
 
 - New repo? Run `/init-agents` in a session: stamps a tailored `AGENTS.md` (+ `CLAUDE.md` symlink) from the repo's actual contents.
-- Feature work flows through the skills: `brainstorming` → `writing-plans` → `executing-plans`, with specs under `docs/the-ark/specs/` and tickets as vault issues.
-- Every session opens with `skills/using-the-ark/SKILL.md` injected by the SessionStart hook, in both Claude Code and Codex. Edit that file to change how skills get invoked.
+- Feature work flows through the skills: `brainstorming` → `writing-plans` → `executing-plans`, with specs under `docs/halo/specs/` and tickets as vault issues.
+- Every session opens with `skills/using-halo/SKILL.md` injected by the SessionStart hook, in both Claude Code and Codex. Edit that file to change how skills get invoked.
 - Edit a skill here, commit, `git pull` elsewhere. Every machine and harness picks it up immediately.
 - Same for the status line: edit `statusline/statusline.sh` and the next render picks it up.

@@ -1,6 +1,6 @@
 # Engineering skills
 
-The Ark adapts selected engineering workflows to its vault-first context, repo-local specs and plans, and explicit commit/push authority.
+Halo adapts selected engineering workflows to its vault-first context, repo-local specs and plans, and explicit commit/push authority.
 
 ## Model-invoked core
 

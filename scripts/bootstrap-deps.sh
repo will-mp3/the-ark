@@ -69,7 +69,7 @@ node_ok() {
 
 if ! node_ok; then
   if command -v node >/dev/null 2>&1; then
-    warn "Node $(node --version) is too old — the ark needs 18+"
+    warn "Node $(node --version) is too old — Halo needs 18+"
   else
     log "Node not found"
   fi

@@ -1,5 +1,5 @@
 {
-  "description": "The Ark — inject the using-the-ark skill at session start",
+  "description": "Halo — inject the using-halo skill at session start",
   "hooks": {
     "SessionStart": [
       {
@@ -7,8 +7,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.codex/ark-session-start",
-            "statusMessage": "Loading the Ark",
+            "command": "~/.codex/halo-session-start",
+            "statusMessage": "Loading Halo",
             "additionalContextLimit": 8000
           }
         ]

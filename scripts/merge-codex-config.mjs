@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Writes the ark's two Codex settings into ~/.codex/config.toml:
+// Writes Halo's two Codex settings into ~/.codex/config.toml:
 //
 //   --statusline    [tui].status_line — Codex's status line is not a command
 //                   like Claude Code's but a picker over a fixed item
@@ -41,7 +41,7 @@ const SERVER = "memory-layer";
 // thread-credits, estimated-thread-cost, …) — run /statusline to browse it.
 const STATUS_ITEMS = ["git-branch", "model", "context-used", "five-hour-limit", "weekly-limit"];
 
-// Item sets the ark has shipped before. A status_line matching one of these was
+// Item sets Halo has shipped before. A status_line matching one of these was
 // written by a previous setup run, so it is ours to upgrade; anything else is
 // the user's own choice and is left alone.
 const PRIOR_ARK_ITEMS = [["git-branch", "model", "context-used", "five-hour-limit"]];

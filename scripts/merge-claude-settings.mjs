@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// Merges the ark's pieces into a Claude Code settings.json: the SessionStart
+// Merges Halo's pieces into a Claude Code settings.json: the SessionStart
 // hook and the status line.
 //
 // Claude Code has no standalone hooks or statusline file, so settings.json —
-// which also holds the user's permissions and model — is the one file the ark
+// which also holds the user's permissions and model — is the one file Halo
 // must edit rather than own. Kept deliberately small and idempotent: entries
-// already pointing at the ark are left alone, and the prior file is copied to
+// already pointing at Halo are left alone, and the prior file is copied to
 // *.bak before any write.
 //
 // Commands are written as absolute paths. settings.json is machine-local and
@@ -37,12 +37,18 @@ const doStatusLine = flags.size === 0 || flags.has("--statusline");
 const doPermissions = flags.size === 0 || flags.has("--permissions");
 
 const path = positional[0] ?? join(homedir(), ".claude", "settings.json");
-const hookCommand = join(homedir(), ".claude", "ark-session-start");
-const statusCommand = `bash ${join(homedir(), ".claude", "ark-statusline")}`;
+const hookCommand = join(homedir(), ".claude", "halo-session-start");
+const statusCommand = `bash ${join(homedir(), ".claude", "halo-statusline")}`;
 
 // The status line lived here before it moved into the repo. Treat it as ours to
 // replace; any other pre-existing command belongs to the user and is left alone.
 const LEGACY_STATUSLINE = join(homedir(), ".claude", "statusline-command.sh");
+
+// Shim names from before the rename to halo. Settings entries that use them are
+// ours to replace: their symlinks are gone, so leaving them would wire a dead
+// hook beside the new one and block the new status line as a "custom" command.
+const LEGACY_HOOK_SHIM = "ark-session-start";
+const LEGACY_STATUS_SHIM = "ark-statusline";
 
 // Pre-approve the vault tools, so no session ever stops to ask. `mcp__<server>`
 // on its own matches nothing — Claude Code compares it as an exact string — so
@@ -65,14 +71,23 @@ function mergeHook() {
   settings.hooks ??= {};
   settings.hooks.SessionStart ??= [];
 
+  settings.hooks.SessionStart = settings.hooks.SessionStart
+    .map((group) => ({
+      ...group,
+      hooks: (group.hooks ?? []).filter(
+        (hook) => !(hook.command ?? "").includes(LEGACY_HOOK_SHIM),
+      ),
+    }))
+    .filter((group) => group.hooks.length > 0);
+
   const wired = settings.hooks.SessionStart.some((group) =>
     (group.hooks ?? []).some((hook) =>
-      (hook.command ?? "").includes("ark-session-start"),
+      (hook.command ?? "").includes("halo-session-start"),
     ),
   );
 
   if (wired) {
-    green(`${path} already has the ark SessionStart hook`);
+    green(`${path} already has the Halo SessionStart hook`);
     return;
   }
 
@@ -80,25 +95,26 @@ function mergeHook() {
     matcher: "startup|clear|compact",
     hooks: [{ type: "command", command: hookCommand, shell: "bash", async: false }],
   });
-  green(`added the ark SessionStart hook to ${path}`);
+  green(`added the Halo SessionStart hook to ${path}`);
 }
 
 function mergeStatusLine() {
   const existing = settings.statusLine?.command ?? "";
 
-  if (existing.includes("ark-statusline")) {
-    green(`${path} already has the ark status line`);
+  if (existing.includes("halo-statusline")) {
+    green(`${path} already has the Halo status line`);
     return;
   }
 
-  if (existing && !existing.includes(LEGACY_STATUSLINE)) {
+  const ours = [LEGACY_STATUSLINE, LEGACY_STATUS_SHIM].some((s) => existing.includes(s));
+  if (existing && !ours) {
     yellow(`${path} has a custom statusLine command — leaving it alone.`);
-    yellow(`  To use the ark's instead, set statusLine.command to: ${statusCommand}`);
+    yellow(`  To use Halo's instead, set statusLine.command to: ${statusCommand}`);
     return;
   }
 
   settings.statusLine = { type: "command", command: statusCommand };
-  green(`set the ark status line in ${path}`);
+  green(`set the Halo status line in ${path}`);
 }
 
 function mergePermissions() {

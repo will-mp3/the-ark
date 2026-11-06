@@ -22,16 +22,16 @@ if ! command -v ollama >/dev/null 2>&1; then
   fi
 fi
 
-# --- Persistence: a launchd agent the ark owns ---
+# --- Persistence: a launchd agent Halo owns ---
 # A backgrounded `ollama serve` dies at logout and never comes back, which
 # silently drops search to FTS-only until someone re-runs setup. `brew services`
 # is not a reliable substitute: it only works when ollama came from brew, and a
 # broken Homebrew makes `brew services list` fail outright, which the old probe
 # read as "no service" and quietly fell through. A launchd agent starts at login
 # and restarts on crash, independent of how ollama was installed.
-AGENT_LABEL="com.the-ark.ollama"
+AGENT_LABEL="com.halo.ollama"
 AGENT_PLIST="$HOME/Library/LaunchAgents/$AGENT_LABEL.plist"
-AGENT_LOG="$HOME/Library/Logs/the-ark-ollama.log"
+AGENT_LOG="$HOME/Library/Logs/halo-ollama.log"
 OLLAMA_BIN="$(command -v ollama)"
 
 install_agent() {

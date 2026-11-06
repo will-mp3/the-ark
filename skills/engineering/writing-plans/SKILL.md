@@ -15,7 +15,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Context:** Work in the current workspace unless the user requests otherwise. Search the memory layer and read `docs/BEST_PRACTICES.md` when present.
 
-**Save plans to:** `docs/the-ark/plans/YYYY-MM-DD-<feature-name>.md`.
+**Save plans to:** `docs/halo/plans/YYYY-MM-DD-<feature-name>.md`.
 
 ## Scope Check
 

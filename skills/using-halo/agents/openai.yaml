@@ -1,0 +1,5 @@
+interface:
+  display_name: "Using Halo"
+  short_description: "How to find and use Halo's skills"
+policy:
+  allow_implicit_invocation: false

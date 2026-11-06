@@ -4,6 +4,7 @@
 
 - **[writing-for-agents](./writing-for-agents/SKILL.md)** — the reference for skills and other agent-consumed documents.
 - **[resume-tailoring](./resume-tailoring/SKILL.md)** — tailor a LaTeX resume to a job listing, one compiled and checked copy per listing.
+- **[cover-letter](./cover-letter/SKILL.md)** — write a one-page LaTeX cover letter paired with a listing's tailored resume.
 
 ## User-invoked specialists
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# The ark's status line: branch | model | context bar | rate-limit bar.
+# Halo's status line: branch | model | context bar | rate-limit bar.
 #
 # Claude Code runs this on every render and pipes a JSON session snapshot on
 # stdin. Wired by scripts/link-statusline.sh, which points settings.json at
-# ~/.claude/ark-statusline (a symlink to this file) so edits ship on `git pull`.
+# ~/.claude/halo-statusline (a symlink to this file) so edits ship on `git pull`.
 #
 # Claude Code only. Codex has a status line too, but it is a picker over fixed
 # items rather than a command hook, so it cannot run this script — see

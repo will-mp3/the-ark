@@ -33,7 +33,7 @@ Add the server to your MCP configuration. Create a `.mcp.json` file in your proj
   "mcpServers": {
     "memory-layer": {
       "command": "node",
-      "args": ["/absolute/path/to/the-ark/mcp/memory-layer/dist/server.js"],
+      "args": ["/absolute/path/to/halo/mcp/memory-layer/dist/server.js"],
       "env": {
         "VAULT_PATH": "/absolute/path/to/your/markdown/store"
       }
@@ -49,7 +49,7 @@ For development, you can use `tsx` to run TypeScript directly without building:
   "mcpServers": {
     "memory-layer": {
       "command": "npx",
-      "args": ["tsx", "/absolute/path/to/the-ark/mcp/memory-layer/src/server.ts"],
+      "args": ["tsx", "/absolute/path/to/halo/mcp/memory-layer/src/server.ts"],
       "env": {
         "VAULT_PATH": "/absolute/path/to/your/markdown/store"
       }
